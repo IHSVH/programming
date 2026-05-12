@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Training</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f4f2;
+    --card: #ffffff;
+    --ink: #0a0a0a;
+    --ink-2: #1f1f1f;
+    --gray-1: #6b6b6b;
+    --gray-2: #9a9a9a;
+    --gray-3: #c4c4c2;
+    --line: #ececea;
+    --line-soft: #f0f0ee;
+    --accent: #ff4d8f;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 20px -4px rgba(0,0,0,0.06), 0 2px 6px -2px rgba(0,0,0,0.04);
+    --radius-sm: 10px;
+    --radius: 16px;
+    --radius-lg: 24px;
+    --radius-pill: 999px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    font-size: 15px;
+    letter-spacing: -0.005em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ─── TOP BRAND + TABS ─── */
+  .masthead-top {
+    padding: 2.5rem 1.5rem 0;
+    text-align: center;
+  }
+  .masthead-top .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gray-1);
+  }
+  .masthead-top .brand::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  nav.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.15rem;
+    margin: 2.5rem auto 0;
+    padding: 0.35rem;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-md);
+    max-width: fit-content;
+  }
+  nav.tabs button {
+    border: none;
+    background: transparent;
+    padding: 0.6rem 1.4rem;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--gray-1);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all 0.18s;
+    white-space: nowrap;
+  }
+  nav.tabs button:hover { color: var(--ink); background: var(--line-soft); }
+  nav.tabs button.current { background: var(--ink); color: #fff; }
+
+  /* ─── PER-TAB SECTION HEADER ─── */
+  .section-header {
+    padding: 2.5rem 1.5rem 1.5rem;
+    text-align: center;
+  }
+  .section-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+  .section-header .meta {
+    margin-top: 1rem;
+    color: var(--gray-1);
+    font-family: 'Geist Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── DAY NAV (Programming) ─── */
+  nav.daynav {
+    position: sticky;
+    top: 1rem;
+    z-index: 50;
+    margin: 1rem auto 2.5rem;
+    max-width: fit-content;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem;
+    box-shadow: var(--shadow-md);
+  }
+  nav.daynav ul {
+    display: flex;
+    list-style: none;
+    gap: 0.15rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: calc(100vw - 3rem);
+  }
+  nav.daynav ul::-webkit-scrollbar { display: none; }
+  nav.daynav a {
+    display: block;
+    padding: 0.55rem 1.05rem;
+    color: var(--gray-1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: -0.01em;
+    border-radius: var(--radius-pill);
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  nav.daynav a:hover { color: var(--ink); background: var(--line-soft); }
+  nav.daynav a.current { background: var(--ink); color: #fff; }
+
+  /* ─── LIFT NAV (Maxes) ─── */
+  nav.lift-nav {
+    position: sticky;
+    top: 1rem;
+    z-index: 50;
+    margin: 0 auto 2rem;
+    max-width: fit-content;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 0.35rem;
+    box-shadow: var(--shadow-md);
+  }
+  nav.lift-nav ul {
+    display: flex;
+    list-style: none;
+    gap: 0.15rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: calc(100vw - 3rem);
+    scroll-behavior: smooth;
+  }
+  nav.lift-nav ul::-webkit-scrollbar { display: none; }
+  nav.lift-nav a {
+    display: block;
+    padding: 0.55rem 1rem;
+    color: var(--gray-1);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: -0.01em;
+    border-radius: var(--radius-pill);
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  nav.lift-nav a:hover { color: var(--ink); background: var(--line-soft); }
+  nav.lift-nav a.current { background: var(--ink); color: #fff; }
+
+  /* ─── TAB CONTENT ─── */
+  main { padding-bottom: 4rem; }
+  .tab-content[hidden] { display: none; }
+
+  /* ─── PROGRAMMING DAYS ─── */
+  .day { margin-bottom: 2rem; scroll-margin-top: 5rem; }
+  .day-header {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    flex-wrap: wrap; padding: 0 0.5rem 1.25rem;
+  }
+  .day-name { font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; }
+  .day-lift { font-size: 1rem; color: var(--gray-1); font-weight: 600; letter-spacing: -0.01em; }
+  .day-lift::before { content: '·'; margin-right: 0.6rem; color: var(--gray-3); font-weight: 400; }
+
+  .blocks {
+    display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+  }
+  @media (min-width: 820px) {
+    .blocks { grid-template-columns: 1.55fr 1fr; gap: 0.75rem; }
+  }
+
+  .block {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 1.75rem;
+    box-shadow: var(--shadow-sm); transition: box-shadow 0.2s;
+  }
+  .block:hover { box-shadow: var(--shadow-md); }
+
+  .block-header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .block-label {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-family: 'Geist Mono', monospace; font-size: 0.65rem;
+    font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gray-2);
+  }
+  .block-label .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+  .mobility .block-label .dot { background: var(--accent); }
+  .mobility .block-label { margin-bottom: 1.25rem; }
+
+  .block-cap {
+    display: inline-flex; align-items: baseline;
+    gap: 0.45rem; font-family: 'Geist Mono', monospace;
+  }
+  .block-cap .time {
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink);
+  }
+  .block-cap .label {
+    font-size: 0.8rem; color: var(--gray-2); text-transform: uppercase;
+    letter-spacing: 0.18em; font-weight: 500;
+  }
+
+  .prose { font-size: 0.95rem; line-height: 1.5; color: var(--ink-2); }
+  .prose > div { margin: 0; padding: 0; }
+  .prose > .gap { height: 0.7rem; }
+
+  .w-title { font-weight: 700; color: var(--ink); font-size: 1.3rem; letter-spacing: -0.015em; }
+  .w-sub { color: var(--gray-1); font-style: italic; font-size: 0.95rem; }
+  .w-rounds { font-weight: 600; color: var(--ink); }
+  .w-rest { color: var(--gray-1); font-style: italic; }
+  .w-section { font-family: 'Geist Mono', monospace; font-size: 0.78rem; color: var(--gray-1); letter-spacing: 0.02em; }
+  .w-strength-h { font-weight: 600; color: var(--ink); }
+  .w-note { font-style: italic; color: var(--gray-1); }
+  .w-resolved {
+    color: var(--gray-1);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  .mobility ul { list-style: none; }
+  .mobility li {
+    padding: 0.7rem 0; border-bottom: 1px solid var(--line-soft);
+    font-size: 0.9rem; color: var(--ink-2);
+  }
+  .mobility li:last-child { border-bottom: none; }
+  .mobility li .target {
+    display: block; font-family: 'Geist Mono', monospace; font-size: 0.65rem;
+    color: var(--gray-2); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.2rem;
+  }
+  .mobility .note {
+    margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line-soft);
+    font-size: 0.8rem; color: var(--gray-1); line-height: 1.5;
+  }
+
+  /* ─── MAXES ─── */
+  .group { margin-bottom: 2.5rem; }
+  .group-label {
+    font-family: 'Geist Mono', monospace; font-size: 0.7rem;
+    color: var(--gray-1); letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 0.85rem; padding-left: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .group-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+  .cards {
+    display: grid; grid-template-columns: 1fr; gap: 0.75rem;
+  }
+  @media (min-width: 820px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+  }
+
+  .lift-card {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 1.5rem 1.5rem 1.25rem;
+    box-shadow: var(--shadow-sm); transition: box-shadow 0.2s;
+    scroll-margin-top: 5rem;
+  }
+  .lift-card:hover { box-shadow: var(--shadow-md); }
+
+  .lift-header {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.1rem;
+  }
+  .lift-header h3 {
+    font-size: 1.15rem; font-weight: 600;
+    letter-spacing: -0.015em; color: var(--ink);
+  }
+
+  .variant-tabs {
+    display: inline-flex; gap: 0.15rem; padding: 0.25rem;
+    background: var(--line-soft); border-radius: var(--radius-pill);
+  }
+  .variant-tab {
+    border: none; background: transparent; padding: 0.35rem 0.85rem;
+    font-family: inherit; font-size: 0.72rem; font-weight: 500;
+    color: var(--gray-1); border-radius: var(--radius-pill);
+    cursor: pointer; transition: all 0.15s;
+  }
+  .variant-tab:hover { color: var(--ink); }
+  .variant-tab.active { background: var(--ink); color: #fff; }
+
+  .pr-row {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    padding-bottom: 1.1rem; border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 1rem;
+  }
+  .pr-row .pr-label {
+    font-family: 'Geist Mono', monospace; font-size: 0.65rem;
+    color: var(--gray-2); text-transform: uppercase; letter-spacing: 0.15em;
+    flex-shrink: 0; min-width: 4rem;
+  }
+  .pr-row input {
+    flex: 1; width: 100%;
+    font-family: 'Geist Mono', monospace; font-size: 1.6rem; font-weight: 700;
+    border: none; outline: none; background: transparent; color: var(--ink);
+    letter-spacing: -0.01em; -moz-appearance: textfield;
+  }
+  .pr-row input::placeholder { color: var(--gray-3); font-weight: 400; }
+  .pr-row input::-webkit-outer-spin-button,
+  .pr-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .pr-row .unit {
+    font-family: 'Geist Mono', monospace; font-size: 0.8rem; color: var(--gray-1);
+    text-transform: uppercase; letter-spacing: 0.15em; font-weight: 500;
+  }
+
+  .pct-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.4rem;
+  }
+  @media (max-width: 480px) {
+    .pct-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .pct {
+    background: var(--line-soft); border-radius: var(--radius-sm);
+    padding: 0.6rem 0.5rem; text-align: center;
+  }
+  .pct.peak { background: rgba(255, 77, 143, 0.08); }
+  .pct-label {
+    font-family: 'Geist Mono', monospace; font-size: 0.65rem;
+    color: var(--gray-1); letter-spacing: 0.05em;
+    margin-bottom: 0.15rem; font-weight: 500;
+  }
+  .pct-weight {
+    font-family: 'Geist Mono', monospace; font-size: 1.05rem;
+    font-weight: 600; color: var(--ink); letter-spacing: -0.01em;
+  }
+  .pct-weight.empty { color: var(--gray-3); font-weight: 400; }
+
+  .global-controls {
+    display: flex; justify-content: flex-end; gap: 0.5rem;
+    margin-bottom: 1.5rem; padding: 0 0.5rem;
+  }
+  .ghost-btn {
+    background: transparent; color: var(--gray-1);
+    border: 1px solid var(--line); border-radius: var(--radius-pill);
+    padding: 0.4rem 0.85rem; font-family: 'Geist Mono', monospace;
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .ghost-btn:hover { color: var(--ink); border-color: var(--ink); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center; padding: 3rem 1.5rem 2rem;
+    color: var(--gray-2); font-family: 'Geist Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  footer .accent { color: var(--accent); margin: 0 0.4rem; }
+
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--gray-3); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gray-2); }
+</style>
+</head>
+<body>
+
+<nav class="tabs" aria-label="Sections">
+  <button class="tab-btn current" data-tab="programming">Programming</button>
+  <button class="tab-btn" data-tab="maxes">Maxes</button>
+</nav>
+
+<!-- ─── PROGRAMMING TAB ─── -->
+<div class="tab-content" data-tab="programming">
+
+  <div class="section-header">
+    <h1>Weekly Programming</h1>
+    <div class="meta">Week of · May 11, 2026</div>
+  </div>
+
+  <nav class="daynav" aria-label="Day navigation">
+    <ul>
+      <li><a href="#monday" class="current">Monday</a></li>
+      <li><a href="#tuesday">Tuesday</a></li>
+      <li><a href="#wednesday">Wednesday</a></li>
+      <li><a href="#thursday">Thursday</a></li>
+      <li><a href="#friday">Friday</a></li>
+      <li><a href="#saturday">Saturday</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+
+    <section class="day" id="monday">
+      <div class="day-header">
+        <h2 class="day-name">Monday</h2>
+        <span class="day-lift">Back Squat</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">35:00</span><span class="label">Clock</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-title">"21 Murph Street"</span></div>
+            <div><span class="w-sub">Murph Prep</span></div>
+            <div class="gap"></div>
+            <div>400m Run</div>
+            <div><span class="w-rounds">-3 Rounds- (Back Squat Cindy)</span></div>
+            <div>5 Pull Ups</div>
+            <div>10 Push Ups</div>
+            <div>15 Back Squats (45%)</div>
+            <div>400m Run</div>
+            <div class="gap"></div>
+            <div><span class="w-rest">Rest 4:00</span></div>
+            <div class="gap"></div>
+            <div>400m Run</div>
+            <div><span class="w-rounds">-5 Rounds- (Cindy)</span></div>
+            <div>5 Pull Ups</div>
+            <div>10 Push Ups</div>
+            <div>15 Air Squats</div>
+            <div>400m Run</div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Back Squat</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Banded ankle distraction<span class="target">Ankle dorsiflexion</span></li>
+            <li>Couch stretch<span class="target">Hip flexor</span></li>
+            <li>Thoracic foam roll (segmental)<span class="target">T-spine extension</span></li>
+            <li>Calf wall stretch (bent &amp; straight)<span class="target">Gastroc + soleus</span></li>
+            <li>Passive hang (30s holds)<span class="target">Lat decompression</span></li>
+          </ul>
+          <p class="note">Pre-session: 30–60s holds. Post-session: hanging + couch stretch for downregulation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="day" id="tuesday">
+      <div class="day-header">
+        <h2 class="day-name">Tuesday</h2>
+        <span class="day-lift">Clean</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">35:00</span><span class="label">Cap</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-sub">Teams of 3, 1 working at a time</span></div>
+            <div class="gap"></div>
+            <div><span class="w-rounds">-9 Rounds-</span></div>
+            <div>30 cal Bike</div>
+            <div>30 Power Cleans (135, 155, 185)</div>
+            <div>90 Double Unders</div>
+            <div>15 Hang Power Cleans (same)</div>
+            <div>30 Alt. Single Leg T2B (R/L = 2)</div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Clean</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Banded front rack opener<span class="target">Front rack</span></li>
+            <li>Wrist prayer + reverse prayer<span class="target">Wrist mobility</span></li>
+            <li>Knee-to-wall ankle<span class="target">Ankle dorsiflexion</span></li>
+            <li>Dead bug / hollow hold<span class="target">Anterior chain</span></li>
+            <li>Calf stretch, forefoot elevated<span class="target">Plantarflexors</span></li>
+          </ul>
+          <p class="note">Front rack opener before the bar is loaded. Wrist work between sets, not as a block.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="day" id="wednesday">
+      <div class="day-header">
+        <h2 class="day-name">Wednesday</h2>
+        <span class="day-lift">Bench Press</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">30:00</span><span class="label">Cap</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-section">(0:00 – 10:00)</span></div>
+            <div>8 Sets of 2 Bench Press</div>
+            <div><span class="w-sub">Increasing in weight, working up to a heavy load</span></div>
+            <div class="gap"></div>
+            <div><span class="w-rest">Rest 2:00</span></div>
+            <div class="gap"></div>
+            <div><span class="w-section">(12:00 – 30:00) 20:00 Cap</span></div>
+            <div class="gap"></div>
+            <div>300m Run</div>
+            <div>20 Push Ups</div>
+            <div>15 Strict Chin Ups</div>
+            <div class="gap"></div>
+            <div>300m Run</div>
+            <div>20 Dual DB Floor Press</div>
+            <div>15 Strict Pull Ups</div>
+            <div class="gap"></div>
+            <div>300m Run</div>
+            <div>20 DB Pullovers from Bench</div>
+            <div>20 Pull Ups</div>
+            <div class="gap"></div>
+            <div>300m Run</div>
+            <div>20 Crush Grip Dual DB Bench Press</div>
+            <div>20 Chest to Bar Pull Ups</div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Bench Press</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Doorway pec stretch (3 heights)<span class="target">Pec major + minor</span></li>
+            <li>Lacrosse ball — pec &amp; subscap<span class="target">Anterior shoulder release</span></li>
+            <li>Overhead lat stretch<span class="target">Lat</span></li>
+            <li>Cross-body posterior capsule<span class="target">Posterior shoulder</span></li>
+            <li>Forearm flexor &amp; extensor<span class="target">Grip endurance</span></li>
+          </ul>
+          <p class="note">Post-session pec work matters more than pre. Pulling volume is high — protect the anterior shoulder.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="day" id="thursday">
+      <div class="day-header">
+        <h2 class="day-name">Thursday</h2>
+        <span class="day-lift">Front Squat</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">26:00</span><span class="label">Cap</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-section">(0:00 – 17:00)</span></div>
+            <div><span class="w-title">"Fight Gone Bad"</span></div>
+            <div class="gap"></div>
+            <div><span class="w-rounds">-3 Rounds-</span></div>
+            <div>1 Minute Wall Balls (20 to 10')</div>
+            <div>1 Minute Sumo DL High Pulls (75)</div>
+            <div>1 Minute Box Jumps (24")</div>
+            <div>1 Minute Push Press (75)</div>
+            <div>1 Minute Row</div>
+            <div>1 Minute Rest</div>
+            <div class="gap"></div>
+            <div><span class="w-rest">Rest 2:00</span></div>
+            <div class="gap"></div>
+            <div><span class="w-section">(19:00 – 26:00)</span></div>
+            <div><span class="w-title">"7 Minutes in Heaven"</span></div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Front Squat</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Banded front rack opener<span class="target">Front rack</span></li>
+            <li>Knee-to-wall + heel-elevated squat hold<span class="target">Ankle dorsiflexion</span></li>
+            <li>90/90 hip switches<span class="target">Hip rotation</span></li>
+            <li>Thoracic extension over foam roller<span class="target">T-spine</span></li>
+            <li>Couch stretch<span class="target">Hip flexor</span></li>
+          </ul>
+          <p class="note">Front rack first. Without it, front squat collapses to a thoracic problem.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="day" id="friday">
+      <div class="day-header">
+        <h2 class="day-name">Friday</h2>
+        <span class="day-lift">Deadlift</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">25:00</span><span class="label">Cap</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-title">"Simmons"</span></div>
+            <div class="gap"></div>
+            <div>800m Row</div>
+            <div>30 Alt. Back Rack Lunges (75, 95, 115)</div>
+            <div>35 Push Ups</div>
+            <div>35 Deadlift (60%)</div>
+            <div>800m Row</div>
+            <div class="gap"></div>
+            <div><span class="w-note">5:30 – 6:30 pm — Whit's Workout</span></div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Deadlift</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Jefferson curl (light, controlled)<span class="target">Posterior chain tolerance</span></li>
+            <li>PNF hamstring contract-relax<span class="target">Hamstring length</span></li>
+            <li>Pigeon / supine figure-4<span class="target">Glute</span></li>
+            <li>90/90 with thoracic rotation<span class="target">Hip internal rotation</span></li>
+            <li>T-spine extension over foam roller<span class="target">T-spine</span></li>
+          </ul>
+          <p class="note">Jefferson curls light. The goal is tissue tolerance, not range. Deadlift days are not stretch-aggressive days.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="day" id="saturday">
+      <div class="day-header">
+        <h2 class="day-name">Saturday</h2>
+        <span class="day-lift">Shoulder to Overhead</span>
+      </div>
+      <div class="blocks">
+        <div class="block workout">
+          <div class="block-header">
+            <div class="block-label"><span class="dot"></span>Workout</div>
+            <div class="block-cap"><span class="time">35:00</span><span class="label">Cap</span></div>
+          </div>
+          <div class="prose">
+            <div><span class="w-rounds">-6 Rounds-</span></div>
+            <div>40 Air Squats</div>
+            <div>8 Bar Muscle Ups</div>
+            <div>40 Walking Lunges (R/L = 2)</div>
+            <div>20 Push Jerks (75, 95, 115)</div>
+            <div>40 Ab-Mat Sit Ups</div>
+            <div>60' Handstand Walk</div>
+            <div class="gap"></div>
+            <div><span class="w-strength-h">Strength: Week 5 Push Jerk</span></div>
+            <div>5 Reps @ 70%</div>
+            <div>5 Reps @ 80%</div>
+            <div>3 Reps @ 90%</div>
+            <div>1 Rep @ 95%</div>
+            <div class="gap"></div>
+            <div>Or 4 × 2 @ 90%</div>
+          </div>
+        </div>
+        <div class="block mobility">
+          <div class="block-label"><span class="dot"></span>Mobility</div>
+          <ul>
+            <li>Banded overhead shoulder opener<span class="target">Shoulder flexion</span></li>
+            <li>Wall slides, palms supinated<span class="target">Scapular upward rotation</span></li>
+            <li>Overhead lat stretch<span class="target">Lat</span></li>
+            <li>Wrist prayer + extension on floor<span class="target">Wrist</span></li>
+            <li>Couch stretch<span class="target">Hip flexor</span></li>
+          </ul>
+          <p class="note">Overhead and wrist before warm-up. Handstand walk exposes wrist mobility immediately.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ─── MAXES TAB ─── -->
+<div class="tab-content" data-tab="maxes" hidden>
+
+  <div class="section-header">
+    <h1>Maxes &amp; Percentages</h1>
+  </div>
+
+  <nav class="lift-nav" aria-label="Lift navigation">
+    <ul id="lift-nav-list"></ul>
+  </nav>
+
+  <main class="container">
+    <div class="global-controls">
+      <button class="ghost-btn" id="unit-toggle" title="Toggle lb/kg">lb</button>
+      <button class="ghost-btn" id="reset-btn" title="Clear all values">Reset</button>
+    </div>
+    <div id="lifts-container"></div>
+  </main>
+
+</div>
+
+<footer>
+  <span>IHSVH</span>
+  <span class="accent">·</span>
+  <span>Strength &amp; Mobility</span>
+</footer>
+
+<script>
+// ─── TAB SWITCHING ───
+function showTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => {
+    el.hidden = el.dataset.tab !== name;
+  });
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.toggle('current', b.dataset.tab === name);
+  });
+  try {
+    if (name === 'maxes') {
+      history.replaceState(null, '', '#maxes');
+      setupScrollSpy();
+    } else {
+      history.replaceState(null, '', window.location.pathname || '#');
+    }
+  } catch (e) {
+    if (name === 'maxes') setupScrollSpy();
+  }
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
+document.querySelectorAll('.tab-btn').forEach(b => {
+  b.addEventListener('click', () => showTab(b.dataset.tab));
+});
+
+// ─── MAXES DATA ───
+const LIFTS = [
+  { id: 'squat',         name: 'Squat',          group: 'squat',    variants: ['Back', 'Front', 'Overhead'] },
+  { id: 'clean',         name: 'Clean',          group: 'clean',    variants: ['Regular', 'Power', 'Hang'] },
+  { id: 'snatch',        name: 'Snatch',         group: 'snatch',   variants: ['Regular', 'Power', 'Hang'] },
+  { id: 'benchPress',    name: 'Bench Press',    group: 'press' },
+  { id: 'overheadPress', name: 'Overhead Press', group: 'press',    variants: ['Strict', 'Push', 'Jerk'] },
+  { id: 'deadlift',      name: 'Deadlift',       group: 'deadlift' }
+];
+const GROUPS = [
+  { id: 'squat',    name: 'Squat' },
+  { id: 'clean',    name: 'Clean' },
+  { id: 'snatch',   name: 'Snatch' },
+  { id: 'press',    name: 'Press' },
+  { id: 'deadlift', name: 'Deadlift' }
+];
+
+// ─── MOVEMENT → MAX LOOKUP (for % resolution in workout text) ───
+// Maps a movement name pattern to a function returning the relevant 1RM.
+// Order matters: more specific patterns first.
+const MOVEMENT_MAX_RESOLVERS = [
+  // Squat variants
+  { pattern: /\bback squat/i,                  resolve: () => getVariantMax('squat', 'Back') },
+  { pattern: /\bfront squat/i,                 resolve: () => getVariantMax('squat', 'Front') },
+  { pattern: /\boverhead squat/i,              resolve: () => getVariantMax('squat', 'Overhead') },
+  // Olympic — Clean variants
+  { pattern: /\bhang power clean/i,            resolve: () => getVariantMax('clean', 'Hang') },
+  { pattern: /\bhang clean/i,                  resolve: () => getVariantMax('clean', 'Hang') },
+  { pattern: /\bpower clean/i,                 resolve: () => getVariantMax('clean', 'Power') },
+  { pattern: /\bclean(?:\s*(?:and|&)\s*jerk)?/i, resolve: () => getVariantMax('clean', 'Regular') },
+  // Olympic — Snatch variants
+  { pattern: /\bhang power snatch/i,           resolve: () => getVariantMax('snatch', 'Hang') },
+  { pattern: /\bhang snatch/i,                 resolve: () => getVariantMax('snatch', 'Hang') },
+  { pattern: /\bpower snatch/i,                resolve: () => getVariantMax('snatch', 'Power') },
+  { pattern: /\bsnatch/i,                      resolve: () => getVariantMax('snatch', 'Regular') },
+  // Overhead Press variants
+  { pattern: /\bpush jerk/i,                   resolve: () => getVariantMax('overheadPress', 'Jerk') },
+  { pattern: /\bsplit jerk/i,                  resolve: () => getVariantMax('overheadPress', 'Jerk') },
+  { pattern: /\bjerk/i,                        resolve: () => getVariantMax('overheadPress', 'Jerk') },
+  { pattern: /\bpush press/i,                  resolve: () => getVariantMax('overheadPress', 'Push') },
+  { pattern: /\b(?:strict )?(?:shoulder |overhead )?press/i, resolve: () => getVariantMax('overheadPress', 'Strict') },
+  // Bench
+  { pattern: /\bbench press/i,                 resolve: () => getSingleMax('benchPress') },
+  { pattern: /\bbench/i,                       resolve: () => getSingleMax('benchPress') },
+  // Deadlift
+  { pattern: /\bdeadlift/i,                    resolve: () => getSingleMax('deadlift') }
+];
+
+function getVariantMax(liftId, variant) {
+  if (!mState[liftId]) return 0;
+  return Number(mState[liftId][variant]) || 0;
+}
+function getSingleMax(liftId) {
+  if (!mState[liftId]) return 0;
+  return Number(mState[liftId].pr) || 0;
+}
+
+function lookupMaxForMovement(movementText) {
+  for (const r of MOVEMENT_MAX_RESOLVERS) {
+    if (r.pattern.test(movementText)) {
+      const max = r.resolve();
+      return max > 0 ? max : 0;
+    }
+  }
+  return 0;
+}
+
+function resolvePercentages() {
+  document.querySelectorAll('.prose').forEach(prose => {
+    // First pass: handle inline (NN%) notation on plain movement lines
+    prose.querySelectorAll(':scope > div').forEach(line => {
+      const orig = line.dataset.origText || line.textContent;
+      if (!line.dataset.origText) line.dataset.origText = orig;
+
+      // Skip non-resolvable structural lines (titles, rounds, etc.) — but allow already-resolved lines through
+      if (line.dataset.resolved !== 'true' && line.querySelector('span')) return;
+
+      const match = orig.match(/\((\d+)%\)/);
+      if (!match) return;
+
+      const pct = parseInt(match[1], 10);
+      const max = lookupMaxForMovement(orig);
+      if (max <= 0) {
+        line.textContent = orig;
+        delete line.dataset.resolved;
+        return;
+      }
+      const exact = max * pct / 100;
+      const weight = roundToBuildableWeight(exact);
+      const effectivePct = Math.round((weight / max) * 100);
+
+      const baseHtml = escapeHtmlText(orig.replace(/\((\d+)%\)/, `(${pct}%)`));
+      const descriptor = (effectivePct === pct)
+        ? ` <span class="w-resolved">(${weight})</span>`
+        : ` <span class="w-resolved">(${weight} is ${effectivePct}%)</span>`;
+      line.innerHTML = baseHtml + descriptor;
+      line.dataset.resolved = 'true';
+    });
+
+    // Second pass: handle "Strength:" blocks — heading + subsequent "N Reps @ PP%" lines
+    const lines = [...prose.querySelectorAll(':scope > div')];
+    let currentMax = 0;
+    let inStrengthBlock = false;
+    for (const line of lines) {
+      const heading = line.querySelector('.w-strength-h');
+      if (heading) {
+        // "Strength: Week 5 Back Squat" → extract the lift after the week number
+        const text = heading.textContent;
+        const m = text.match(/Strength:\s*Week\s*\d+\s+(.+?)\s*$/i);
+        if (m) {
+          currentMax = lookupMaxForMovement(m[1]);
+          inStrengthBlock = true;
+        } else {
+          currentMax = 0;
+          inStrengthBlock = false;
+        }
+        continue;
+      }
+      // Gap div — keep strength context active (the "Or" alternate may follow)
+      if (line.classList.contains('gap')) {
+        continue;
+      }
+      if (!inStrengthBlock) continue;
+
+      // Cache and parse the set line
+      const orig = line.dataset.origText || line.textContent;
+      if (!line.dataset.origText) line.dataset.origText = orig;
+
+      // Match "N Rep(s) @ PP%" and also "N × M @ PP%" (the "Or 4 × 2 @ 90%" line)
+      const setMatch = orig.match(/^(.+?@\s*)(\d+)(%)(.*)$/);
+      if (!setMatch) continue;
+
+      const pct = parseInt(setMatch[2], 10);
+      if (currentMax <= 0) {
+        line.textContent = orig;
+        delete line.dataset.strResolved;
+        continue;
+      }
+      const exact = currentMax * pct / 100;
+      const weight = roundToBuildableWeight(exact);
+      const effectivePct = Math.round((weight / currentMax) * 100);
+
+      const baseHtml = escapeHtmlText(orig);
+      const descriptor = (effectivePct === pct)
+        ? ` <span class="w-resolved">(${weight})</span>`
+        : ` <span class="w-resolved">(${weight} is ${effectivePct}%)</span>`;
+      line.innerHTML = baseHtml + descriptor;
+      line.dataset.strResolved = 'true';
+    }
+  });
+}
+
+function escapeHtmlText(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// Round to a weight buildable on a 45 lb bar with pairs of {45, 35, 25, 15, 10, 5} plates.
+// That set generates {45, 55, 65, 75, ...} — every 10 lb starting at 45.
+// For kg, fall back to nearest 2.5 (no specific plate set defined).
+function roundToBuildableWeight(target) {
+  if (unit === 'kg') {
+    return Math.round(target / 2.5) * 2.5;
+  }
+  // Buildable: 45 + 10n.  Round target to nearest value of that form.
+  if (target < 45) return 45;
+  const n = Math.round((target - 45) / 10);
+  return 45 + 10 * n;
+}
+
+const PERCENTAGES = [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95];
+const PEAK_PCTS = new Set([70, 80, 90, 95]);
+
+// Defaults — applied only to empty fields. User edits always win.
+// Remove or update once the user has confirmed their own values.
+const DEFAULT_MAXES = {
+  squat:         { Back: 315, Front: 265, Overhead: 185 },
+  clean:         { Regular: 225, /* Power: blank */ Hang: 155 },
+  snatch:        { Regular: 185 /* Power: blank, Hang: blank */ },
+  benchPress:    { pr: 225 },
+  overheadPress: { Strict: 125, /* Push: blank */ Jerk: 185 },
+  deadlift:      { pr: 445 }
+};
+
+function applyDefaults() {
+  for (const [liftId, defaults] of Object.entries(DEFAULT_MAXES)) {
+    if (!mState[liftId]) continue;
+    for (const [key, value] of Object.entries(defaults)) {
+      // Only fill blanks — never overwrite existing data
+      if (mState[liftId][key] === '' || mState[liftId][key] === undefined || mState[liftId][key] === 0) {
+        mState[liftId][key] = value;
+      }
+    }
+  }
+  saveMaxesState();
+}
+
+let mState = loadMaxesState() || initialMaxesState();
+let unit = loadUnit() || 'lb';
+
+function initialMaxesState() {
+  const s = {};
+  for (const lift of LIFTS) {
+    if (lift.variants) {
+      s[lift.id] = { activeVariant: lift.variants[0] };
+      for (const v of lift.variants) s[lift.id][v] = '';
+    } else {
+      s[lift.id] = { pr: '' };
+    }
+  }
+  return s;
+}
+function loadMaxesState() {
+  try {
+    // Try new schema first
+    const v2 = localStorage.getItem('maxes_state_v2');
+    if (v2) return JSON.parse(v2);
+    // Migrate from v1 if present
+    const v1raw = localStorage.getItem('maxes_state_v1');
+    if (!v1raw) return null;
+    const v1 = JSON.parse(v1raw);
+    const migrated = initialMaxesState();
+    // Map old standalone Back/Front Squat into new Squat variants
+    if (v1.backSquat && v1.backSquat.pr) migrated.squat.Back = v1.backSquat.pr;
+    if (v1.frontSquat && v1.frontSquat.pr) migrated.squat.Front = v1.frontSquat.pr;
+    // Old "overheadPress" was a single PR — assume it was Strict press
+    if (v1.overheadPress && v1.overheadPress.pr) migrated.overheadPress.Strict = v1.overheadPress.pr;
+    // Carry over unchanged
+    if (v1.clean) migrated.clean = { ...migrated.clean, ...v1.clean };
+    if (v1.snatch) migrated.snatch = { ...migrated.snatch, ...v1.snatch };
+    if (v1.benchPress) migrated.benchPress = v1.benchPress;
+    if (v1.deadlift) migrated.deadlift = v1.deadlift;
+    // Save under new key so we don't re-migrate
+    try { localStorage.setItem('maxes_state_v2', JSON.stringify(migrated)); } catch (e) {}
+    return migrated;
+  } catch (e) { return null; }
+}
+function saveMaxesState() {
+  try { localStorage.setItem('maxes_state_v2', JSON.stringify(mState)); } catch (e) {}
+}
+function loadUnit() { try { return localStorage.getItem('maxes_unit_v1'); } catch (e) { return null; } }
+function saveUnit() { try { localStorage.setItem('maxes_unit_v1', unit); } catch (e) {} }
+
+function roundWeight(w) {
+  if (!w || isNaN(w) || w <= 0) return '';
+  const step = unit === 'lb' ? 5 : 2.5;
+  return (Math.round(w / step) * step).toString().replace(/\.0$/, '');
+}
+function getCurrentPR(liftId) {
+  const lift = LIFTS.find(l => l.id === liftId);
+  if (!lift) return 0;
+  if (lift.variants) {
+    const v = mState[liftId].activeVariant;
+    return Number(mState[liftId][v]) || 0;
+  }
+  return Number(mState[liftId].pr) || 0;
+}
+function setPR(liftId, value) {
+  const lift = LIFTS.find(l => l.id === liftId);
+  if (!lift) return;
+  const cleaned = value === '' ? '' : Math.max(0, Number(value) || 0);
+  if (lift.variants) {
+    const v = mState[liftId].activeVariant;
+    mState[liftId][v] = cleaned;
+  } else {
+    mState[liftId].pr = cleaned;
+  }
+  saveMaxesState();
+}
+function setActiveVariant(liftId, variant) {
+  mState[liftId].activeVariant = variant;
+  saveMaxesState();
+}
+
+function renderLiftNav() {
+  const list = document.getElementById('lift-nav-list');
+  list.innerHTML = LIFTS.map((lift, i) =>
+    `<li><a href="#lift-${lift.id}" data-lift="${lift.id}"${i === 0 ? ' class="current"' : ''}>${lift.name}</a></li>`
+  ).join('');
+}
+
+function renderMaxes() {
+  const container = document.getElementById('lifts-container');
+  let html = '';
+  for (const group of GROUPS) {
+    const lifts = LIFTS.filter(l => l.group === group.id);
+    if (!lifts.length) continue;
+    html += `<section class="group">
+      <div class="group-label">${group.name}</div>
+      <div class="cards">${lifts.map(renderLiftCard).join('')}</div>
+    </section>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderLiftCard(lift) {
+  const pr = getCurrentPR(lift.id);
+  const variantTabs = lift.variants ? `
+    <div class="variant-tabs" data-lift="${lift.id}">
+      ${lift.variants.map(v => `
+        <button class="variant-tab ${mState[lift.id].activeVariant === v ? 'active' : ''}"
+                data-lift="${lift.id}" data-variant="${v}">${v}</button>
+      `).join('')}
+    </div>` : '';
+  return `
+    <div class="lift-card" id="lift-${lift.id}" data-lift="${lift.id}">
+      <div class="lift-header">
+        <h3>${lift.name}</h3>
+        ${variantTabs}
+      </div>
+      <div class="pr-row">
+        <span class="pr-label">1RM</span>
+        <input type="number" inputmode="decimal" min="0" step="any"
+               class="pr-input" data-lift="${lift.id}"
+               value="${pr || ''}" placeholder="—">
+        <span class="unit">${unit}</span>
+      </div>
+      <div class="pct-grid">
+        ${PERCENTAGES.map(pct => {
+          const w = pr ? roundWeight(pr * pct / 100) : '';
+          const peak = PEAK_PCTS.has(pct) ? ' peak' : '';
+          return `<div class="pct${peak}">
+            <div class="pct-label">${pct}%</div>
+            <div class="pct-weight${w ? '' : ' empty'}">${w || '—'}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function updateMaxesCard(liftId) {
+  const card = document.querySelector(`.lift-card[data-lift="${liftId}"]`);
+  if (!card) return;
+  const lift = LIFTS.find(l => l.id === liftId);
+  const pr = getCurrentPR(liftId);
+  if (lift.variants) {
+    card.querySelectorAll('.variant-tab').forEach(t => {
+      t.classList.toggle('active', t.dataset.variant === mState[liftId].activeVariant);
+    });
+  }
+  card.querySelectorAll('.pct-weight').forEach((cell, i) => {
+    const pct = PERCENTAGES[i];
+    const w = pr ? roundWeight(pr * pct / 100) : '';
+    cell.textContent = w || '—';
+    cell.classList.toggle('empty', !w);
+  });
+}
+
+// ─── SCROLL SPY (maxes) ───
+let scrollObserver = null;
+function setupScrollSpy() {
+  if (scrollObserver) scrollObserver.disconnect();
+  scrollObserver = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        const liftId = entry.target.dataset.lift;
+        document.querySelectorAll('nav.lift-nav a').forEach(p => {
+          p.classList.toggle('current', p.dataset.lift === liftId);
+        });
+        const current = document.querySelector('nav.lift-nav a.current');
+        if (current) current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+  document.querySelectorAll('.lift-card').forEach(card => scrollObserver.observe(card));
+}
+
+// ─── EVENT DELEGATION (maxes) ───
+document.addEventListener('input', (e) => {
+  if (e.target.classList.contains('pr-input')) {
+    const liftId = e.target.dataset.lift;
+    setPR(liftId, e.target.value);
+    updateMaxesCard(liftId);
+    resolvePercentages();
+  }
+});
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('variant-tab')) {
+    const liftId = e.target.dataset.lift;
+    const variant = e.target.dataset.variant;
+    setActiveVariant(liftId, variant);
+    const input = document.querySelector(`.pr-input[data-lift="${liftId}"]`);
+    if (input) input.value = getCurrentPR(liftId) || '';
+    updateMaxesCard(liftId);
+    resolvePercentages();
+  }
+});
+
+document.getElementById('unit-toggle').addEventListener('click', () => {
+  unit = unit === 'lb' ? 'kg' : 'lb';
+  saveUnit();
+  document.getElementById('unit-toggle').textContent = unit;
+  renderMaxes();
+  resolvePercentages();
+});
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (!confirm('Clear all maxes? This cannot be undone.')) return;
+  mState = initialMaxesState();
+  saveMaxesState();
+  renderMaxes();
+  resolvePercentages();
+});
+
+// ─── INIT ───
+applyDefaults();
+document.getElementById('unit-toggle').textContent = unit;
+renderLiftNav();
+renderMaxes();
+resolvePercentages();
+
+// Initial tab from URL hash
+const hash = window.location.hash;
+const initialTab = (hash === '#maxes' || hash.startsWith('#lift-')) ? 'maxes' : 'programming';
+showTab(initialTab);
+</script>
+
+</body>
+</html>
